@@ -8,6 +8,26 @@
 </head>
 <body>
   <h1>Weather App</h1>
+
+  <form id="weather-form">
+    <input
+      type="text"
+      id="location"
+      placeholder="Enter a city..."
+      required
+    >
+    <button type="submit">Get Weather</button>
+  </form>
+
+  <div id="weather-display">
+    <h2 id="city"></h2>
+    <p id="temperature"></p>
+    <p id="condition"></p>
+    <p id="feels-like"></p>
+    <p id="humidity"></p>
+    <p id="wind-speed"></p>
+    <p id="high-low"></p>
+  </div>
   
   <script src="scripts.js"></script>
 </body>
