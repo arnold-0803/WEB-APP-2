@@ -1,3 +1,6 @@
+let currentUnit = "C";
+let currentWeatherData = null;
+
 async function getWeatherData (location) {
   try{
     const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodeURIComponent(location)}?unitGroup=metric&contentType=json`);
@@ -9,6 +12,8 @@ async function getWeatherData (location) {
     const weatherData =  await response.json();
 
     const processeData = processWeatherData(weatherData);
+
+    currentWeatherData = processeData;
 
     displayWeatherData(processeData);
 
@@ -56,16 +61,41 @@ function displayWeatherData(data) {
   const highLowTemperatureElement = document.querySelector("#high-low");
 
   cityElement.textContent = data.location;
-  temperatureElement.textContent = `${data.temperature}℃`;
+  temperatureElement.textContent = formatTemperature(data.temperature);
   conditionElement.textContent = data.weatherCondition;
-  feelsLikeElement.textContent = `${data.feelsLikeTemperature}℃`;
-  humidityElement.textContent = `${data.humidity}%`;
-  windSpeedElement.textContent = `${data.windSpeed} km/h`;
-  highLowTemperatureElement.textContent = `High: ${data.maximumTemperature}°C | Low: ${data.minimumTemperature}°C`;
+  feelsLikeElement.textContent = `Feels like: ${formatTemperature(data.feelsLikeTemperature)}`;
+  humidityElement.textContent = `Humidity: ${data.humidity}%`;
+  windSpeedElement.textContent = `Wind speed: ${data.windSpeed} km/h`;
+  highLowTemperatureElement.textContent = `High: ${formatTemperature(data.maximumTemperature)} | Low: ${formatTemperature(data.minimumTemperature)}`;
 };
 
 function convertToFahrenheit(celsius) {
   return (celsius*9/5) + 32;
 }
 
-console.log(convertToFahrenheit(21));
+function formatTemperature(celsius) {
+  if(currentUnit === "C"){
+    return `${celsius}℃`;
+  }
+
+  return `${convertToFahrenheit(celsius).toFixed(1)}°F`;
+}
+
+const celsiusButton = document.querySelector("#celsius-btn");
+const fahrenheitButton = document.querySelector("#fahrenheit-btn");
+
+celsiusButton.addEventListener("click", () => {
+  currentUnit = "C";
+
+  if(currentWeatherData){
+    displayWeatherData(currentWeatherData);
+  }
+});
+
+fahrenheitButton.addEventListener("click", () => {
+  currentUnit = "F";
+
+  if(currentWeatherData){
+    displayWeatherData(currentWeatherData);
+  }
+});

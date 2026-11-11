@@ -1,0 +1,139 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #dbeafe, #eff6ff);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  color: #1e293b;
+}
+
+h1 {
+  margin-bottom: 30px;
+  font-size: 2rem;
+  color: #1e3a8a;
+}
+
+#weather-form {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 450px;
+  margin-bottom: 25px;
+}
+
+#location {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+}
+
+#location:focus {
+  border-color: #2563eb;
+}
+
+#weather-form button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#weather-form button:hover {
+  background: #1d4ed8;
+}
+
+
+#weather-display {
+  width: 100%;
+  max-width: 450px;
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+#city {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+#temperature {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #2563eb;
+  margin-bottom: 10px;
+}
+
+#condition {
+  font-size: 1.1rem;
+  color: #64748b;
+  margin-bottom: 25px;
+}
+
+#feels-like,
+#humidity,
+#wind-speed,
+#high-low {
+  margin: 12px 0;
+  font-size: 1rem;
+  color: #475569;
+}
+
+
+#temperature-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#temperature-toggle button {
+  padding: 8px 18px;
+  border: 1px solid #2563eb;
+  border-radius: 20px;
+  background: white;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#temperature-toggle button:hover {
+  background: #2563eb;
+  color: white;
+}
+
+
+@media (max-width: 480px) {
+  body {
+    padding: 25px 15px;
+  }
+
+  #weather-display {
+    padding: 22px;
+  }
+
+  #temperature {
+    font-size: 2.8rem;
+  }
+
+  #weather-form button {
+    padding: 12px;
+  }
+}
