@@ -21,18 +21,27 @@
 
   <div id="weather-display">
     <h2 id="city"></h2>
-    <p id="temperature"></p>
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <img id="weather-icon" src="" alt="Current weather condition">
+      <p id="temperature"></p>
+    </div>
     <p id="condition"></p>
     <p id="feels-like"></p>
     <p id="humidity"></p>
     <p id="wind-speed"></p>
     <p id="high-low"></p>
+
+    <div id="temperature-toggle">
+      <button id="celsius-btn" type="button">°C</button>
+      <button id="fahrenheit-btn" type="button">°F</button>
+    </div>
   </div>
 
-  <div id="temperature-toggle">
-    <button id="celsius-btn" type="button">°C</button>
-    <button id="fahrenheit-btn" type="button">°F</button>
-  </div>
+  <p id="loading-message" hidden>
+    Fetching weather data...
+  </p>
+
+  <p id="error-message" hidden></p>
   
   <script src="scripts.js"></script>
 </body>

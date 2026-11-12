@@ -1,13 +1,20 @@
 let currentUnit = "C";
 let currentWeatherData = null;
+const loadingMessage = document.querySelector("#loading-message");
+const errorMessage = document.querySelector("#error-message");
 
 async function getWeatherData (location) {
+  errorMessage.hidden = true;
+  errorMessage.textContent = "";
+
+  loadingMessage.hidden = false;
+
   try{
     const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodeURIComponent(location)}?unitGroup=metric&contentType=json`);
 
-    if(!response.ok) {
-      throw new Error("Weather request failed");
-    }
+    // if(!response.ok) {
+    //   throw new Error("Weather request failed");
+    // }
 
     const weatherData =  await response.json();
 
@@ -19,6 +26,13 @@ async function getWeatherData (location) {
 
   }catch(error) {
     console.error(error);
+
+    errorMessage.textContent = 
+      "Unable to retrieve weather data. Please check the location and try again.";
+
+    errorMessage.hidden = false;
+  }finally{
+    loadingMessage.hidden = true;
   };
 }
 
@@ -33,7 +47,8 @@ function processWeatherData(data) {
     humidity: data.currentConditions.humidity,
     windSpeed: data.currentConditions.windspeed,
     maximumTemperature: data.days[0].tempmax,
-    minimumTemperature: data.days[0].tempmin
+    minimumTemperature: data.days[0].tempmin,
+    weatherIcon: data.currentConditions.icon,
   };
 }
 
@@ -59,6 +74,7 @@ function displayWeatherData(data) {
   const humidityElement = document.querySelector("#humidity");
   const windSpeedElement = document.querySelector("#wind-speed");
   const highLowTemperatureElement = document.querySelector("#high-low");
+  const weatherIconElement = document.querySelector("#weather-icon");
 
   cityElement.textContent = data.location;
   temperatureElement.textContent = formatTemperature(data.temperature);
@@ -67,6 +83,7 @@ function displayWeatherData(data) {
   humidityElement.textContent = `Humidity: ${data.humidity}%`;
   windSpeedElement.textContent = `Wind speed: ${data.windSpeed} km/h`;
   highLowTemperatureElement.textContent = `High: ${formatTemperature(data.maximumTemperature)} | Low: ${formatTemperature(data.minimumTemperature)}`;
+  weatherIconElement.src = `https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/PNG/1st%20Set%20-%20Color/${data.weatherIcon}.png`;
 };
 
 function convertToFahrenheit(celsius) {
@@ -90,6 +107,8 @@ celsiusButton.addEventListener("click", () => {
   if(currentWeatherData){
     displayWeatherData(currentWeatherData);
   }
+
+  updateTemperatureButtons();
 });
 
 fahrenheitButton.addEventListener("click", () => {
@@ -98,4 +117,13 @@ fahrenheitButton.addEventListener("click", () => {
   if(currentWeatherData){
     displayWeatherData(currentWeatherData);
   }
+
+  updateTemperatureButtons();
 });
+
+function updateTemperatureButtons() {
+  celsiusButton.classList.toggle("active", currentUnit === "C");
+  fahrenheitButton.classList.toggle("active", currentUnit === "F");
+}
+
+updateTemperatureButtons();
