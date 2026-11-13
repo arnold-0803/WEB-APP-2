@@ -75,15 +75,24 @@ function displayWeatherData(data) {
   const windSpeedElement = document.querySelector("#wind-speed");
   const highLowTemperatureElement = document.querySelector("#high-low");
   const weatherIconElement = document.querySelector("#weather-icon");
+  const feelsLikeText = feelsLikeElement.querySelector("span");
+  const humidityText = humidityElement.querySelector("span");
+  const windSpeedText = windSpeedElement.querySelector("span");
+  const highLowText = highLowTemperatureElement.querySelector("span");
+  const weatherPlaceholder = document.querySelector("#weather-placeholder");
+  const weatherContent = document.querySelector("#weather-content");
 
   cityElement.textContent = data.location;
   temperatureElement.textContent = formatTemperature(data.temperature);
   conditionElement.textContent = data.weatherCondition;
-  feelsLikeElement.textContent = `Feels like: ${formatTemperature(data.feelsLikeTemperature)}`;
-  humidityElement.textContent = `Humidity: ${data.humidity}%`;
-  windSpeedElement.textContent = `Wind speed: ${data.windSpeed} km/h`;
-  highLowTemperatureElement.textContent = `High: ${formatTemperature(data.maximumTemperature)} | Low: ${formatTemperature(data.minimumTemperature)}`;
+  feelsLikeText.textContent = `Feels like: ${formatTemperature(data.feelsLikeTemperature)}`;
+  humidityText.textContent = `Humidity: ${data.humidity}%`;
+  windSpeedText.textContent = `Wind speed: ${data.windSpeed} km/h`;
+  highLowText.textContent = `High: ${formatTemperature(data.maximumTemperature)} | Low: ${formatTemperature(data.minimumTemperature)}`;
   weatherIconElement.src = `https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/PNG/1st%20Set%20-%20Color/${data.weatherIcon}.png`;
+
+  weatherPlaceholder.hidden = true;
+  weatherContent.hidden = false;
 };
 
 function convertToFahrenheit(celsius) {
